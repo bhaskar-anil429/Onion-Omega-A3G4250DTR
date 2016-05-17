@@ -4,28 +4,36 @@
 # This code is designed to work with the A3G4250DTR_I2CS I2C Mini Module available from ControlEverything.com.
 # https://www.controleverything.com/products
 
-import smbus
+from OmegaExpansion import onionI2C
 import time
+import sys
 
-# Get I2C bus
-bus = smbus.SMBus(1)
+print 'Starting: onionI2C module testing...'
+
+i2c 	= onionI2C.OnionI2C(0)
+
+# set the verbosity
+i2c.setVerbosity(1)
 
 # A3G4250DTR address, 0x68(104)
 # Select control register1, 0x20(32)
 #		0x0F(15)	Output Data rate = 100Hz, Power ON, X , Y, Z-Axis enabled
-bus.write_byte_data(0x68, 0x20, 0x0F)
+value = [0x0F]
+val 	= i2c.writeBytes(0x68, 0x20, value)
+print '   writeBytes returned: ', val
 # A3G4250DTR address, 0x68(104)
 # Select control register4, 0x23(35)
 #		0x00(00)	Data LSB @ lower address, Self test disabled
-bus.write_byte_data(0x68, 0x23, 0x00)
-
+value = [0x00]
+val 	= i2c.writeBytes(0x68, 0x23, value)
+print '   writeBytes returned: ', val
 time.sleep(0.5)
 
 # A3G4250DTR address, 0x68(104)
 # Read data back from 0x28(40), 2 bytes
 # X-Axis LSB, X-Axis MSB
-data0 = bus.read_byte_data(0x68, 0x28)
-data1 = bus.read_byte_data(0x68, 0x29)
+data0 = i2c.readBytes(0x68, 0x28)
+data1 = i2c.readBytes(0x68, 0x29)
 
 # Convert the data
 xGyro = data1 * 256 + data0
@@ -35,8 +43,8 @@ if xGyro > 32767 :
 # A3G4250DTR address, 0x68(104)
 # Read data back from 0x2A(42), 2 bytes
 # Y-Axis LSB, Y-Axis MSB
-data0 = bus.read_byte_data(0x68, 0x2A)
-data1 = bus.read_byte_data(0x68, 0x2B)
+data0 = i2c.readBytes(0x68, 0x2A)
+data1 = i2c.readBytes(0x68, 0x2B)
 
 # Convert the data
 yGyro = data1 * 256 + data0
@@ -46,8 +54,8 @@ if yGyro > 32767 :
 # A3G4250DTR address, 0x68(104)
 # Read data back from 0x2C(44), 2 bytes
 # Z-Axis LSB, Z-Axis MSB
-data0 = bus.read_byte_data(0x68, 0x2C)
-data1 = bus.read_byte_data(0x68, 0x2D)
+data0 = i2c.readBytes(0x68, 0x2C)
+data1 = i2c.readBytes(0x68, 0x2D)
 
 # Convert the data
 zGyro = data1 * 256 + data0
