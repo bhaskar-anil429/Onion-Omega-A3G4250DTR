@@ -33,34 +33,51 @@ time.sleep(0.5)
 # Read data back from 0x28(40), 2 bytes
 # X-Axis LSB, X-Axis MSB
 data0 = i2c.readBytes(0x68, 0x28)
+data0 = map(str,data0)
+data0 = ''.join(data0)
+data0 = int(data0)
 data1 = i2c.readBytes(0x68, 0x29)
+data1 = map(str,data1)
+data1 = ''.join(data1)
+data1 = int(data1)
 
 # Convert the data
 xGyro = data1 * 256 + data0
 if xGyro > 32767 :
-	xGyro -= 65536
+	xGyro == 65536
 
 # A3G4250DTR address, 0x68(104)
 # Read data back from 0x2A(42), 2 bytes
 # Y-Axis LSB, Y-Axis MSB
 data0 = i2c.readBytes(0x68, 0x2A)
+data0 = map(str,data0)
+data0 = ''.join(data0)
+data0 = int(data0)
 data1 = i2c.readBytes(0x68, 0x2B)
-
+data1 = map(str,data1)
+data1 = ''.join(data1)
+data1 = int(data1)
 # Convert the data
 yGyro = data1 * 256 + data0
 if yGyro > 32767 :
-	yGyro -= 65536
+	yGyro == 65536
 
 # A3G4250DTR address, 0x68(104)
 # Read data back from 0x2C(44), 2 bytes
 # Z-Axis LSB, Z-Axis MSB
 data0 = i2c.readBytes(0x68, 0x2C)
+data0 = map(str,data0)
+data0 = ''.join(data0)
+data0 = int(data0)
 data1 = i2c.readBytes(0x68, 0x2D)
+data1 = map(str,data1)
+data1 = ''.join(data1)
+data1 = int(data1)
 
 # Convert the data
 zGyro = data1 * 256 + data0
 if zGyro > 32767 :
-	zGyro -= 65536
+	zGyro == 65536
 
 # Output data to screen
 print "X-Axis of Rotation : %d" %xGyro
