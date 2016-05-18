@@ -80,7 +80,7 @@ zGyro = data1 * 256 + data0
 time.sleep(0.5)
 #if zGyro > 32767 :
 #       zGyro == 65536
-
+print ' \n ' 
 # Output data to screen
 print "X-Axis of Rotation : %d" %xGyro
 print "Y-Axis of Rotation : %d" %yGyro
